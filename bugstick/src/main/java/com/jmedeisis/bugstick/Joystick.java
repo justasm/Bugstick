@@ -42,6 +42,7 @@ public class Joystick extends FrameLayout {
     private int activePointerId = INVALID_POINTER_ID;
 
     private boolean startOnFirstTouch = true;
+    private boolean hasFixedRadius = false;
 
     private JoystickListener listener;
 
@@ -74,6 +75,10 @@ public class Joystick extends FrameLayout {
         if (null != attrs) {
             TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.Joystick);
             startOnFirstTouch = a.getBoolean(R.styleable.Joystick_start_on_first_touch, startOnFirstTouch);
+            hasFixedRadius = a.hasValue(R.styleable.Joystick_radius);
+            if(hasFixedRadius){
+                radius = a.getDimensionPixelOffset(R.styleable.Joystick_radius, (int) radius);
+            }
             a.recycle();
         }
     }
@@ -90,7 +95,9 @@ public class Joystick extends FrameLayout {
         centerX = (float) w / 2;
         centerY = (float) h / 2;
 
-        radius = (float) Math.min(w, h) / 2;
+        if(!hasFixedRadius) {
+            radius = (float) Math.min(w, h) / 2;
+        }
     }
 
     public void setJoystickListener(JoystickListener listener) {

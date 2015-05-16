@@ -25,7 +25,8 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:background="@drawable/bg_base"
-        app:start_on_first_touch="false" >
+        app:start_on_first_touch="true"
+        app:radius="92dp" >
 
         <Button
             android:layout_width="160dp"
