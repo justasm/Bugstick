@@ -26,8 +26,7 @@
         android:layout_centerInParent="true"
         android:background="@drawable/bg_base"
         app:start_on_first_touch="true"
-        app:force_square="true"
-        app:radius="92dp" >
+        app:force_square="true" >
 
         <Button
             android:layout_width="160dp"

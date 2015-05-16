@@ -96,9 +96,20 @@ public class Joystick extends FrameLayout {
 
         centerX = (float) w / 2;
         centerY = (float) h / 2;
+    }
 
-        if(!hasFixedRadius) {
-            radius = (float) Math.min(w, h) / 2;
+    @Override
+    public void onLayout(boolean changed, int left, int top, int right, int bottom){
+        super.onLayout(changed, left, top, right, bottom);
+
+        if(changed && !hasFixedRadius) {
+            float stickRadius = 0;
+            if(hasStick()){
+                final View stick = getChildAt(0);
+                stickRadius = (float) Math.max(stick.getWidth(), stick.getHeight()) / 2;
+            }
+
+            radius = (float) Math.min(right - left, bottom - top) / 2 - stickRadius;
         }
     }
 
