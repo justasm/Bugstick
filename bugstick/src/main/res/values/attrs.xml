@@ -3,6 +3,7 @@
 
     <declare-styleable name="Joystick">
         <attr name="start_on_first_touch" format="boolean" />
+        <attr name="force_square" format="boolean" />
         <attr name="radius" format="dimension" />
     </declare-styleable>
 
