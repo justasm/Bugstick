@@ -2,6 +2,7 @@ package com.jmedeisis.bugstick;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
@@ -40,33 +41,41 @@ public class Joystick extends FrameLayout {
     private static final int INVALID_POINTER_ID = -1;
     private int activePointerId = INVALID_POINTER_ID;
 
+    private boolean startOnFirstTouch = true;
+
     private JoystickListener listener;
 
     public Joystick(Context context) {
         super(context);
-        init(context);
+        init(context, null);
     }
 
     public Joystick(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init(context);
+        init(context, attrs);
     }
 
     public Joystick(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init(context);
+        init(context, attrs);
     }
 
     @SuppressWarnings("unused")
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public Joystick(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-        init(context);
+        init(context, attrs);
     }
 
-    private void init(Context context) {
+    private void init(Context context, AttributeSet attrs) {
         final ViewConfiguration configuration = ViewConfiguration.get(context);
         touchSlop = configuration.getScaledTouchSlop();
+
+        if (null != attrs) {
+            TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.Joystick);
+            startOnFirstTouch = a.getBoolean(R.styleable.Joystick_start_on_first_touch, startOnFirstTouch);
+            a.recycle();
+        }
     }
 
     @Override
@@ -110,14 +119,8 @@ public class Joystick extends FrameLayout {
                 break;
             }
             case MotionEvent.ACTION_MOVE: {
-                if (!detectingDrag) return false;
                 if (INVALID_POINTER_ID == activePointerId) break;
-                final int pointerIndex = event.findPointerIndex(activePointerId);
-                final float x = event.getX(pointerIndex);
-                final float y = event.getY(pointerIndex);
-                final float dx = Math.abs(x - downX);
-                final float dy = Math.abs(y - downY);
-                if (dx * dx + dy * dy > touchSlop * touchSlop) {
+                if (detectingDrag && dragExceedsSlop(event)) {
                     onDragStart();
                     return true;
                 }
@@ -147,22 +150,27 @@ public class Joystick extends FrameLayout {
         switch (event.getActionMasked()) {
             case MotionEvent.ACTION_DOWN: {
                 if (!detectingDrag) return false;
-                onDragStart();
+                if (startOnFirstTouch) onDragStart();
                 return true;
             }
             case MotionEvent.ACTION_MOVE: {
-                if (!dragInProgress) break;
                 if (INVALID_POINTER_ID == activePointerId) break;
 
-                int pointerIndex = event.findPointerIndex(activePointerId);
-                float latestX = event.getX(pointerIndex);
-                float latestY = event.getY(pointerIndex);
+                if (dragInProgress) {
+                    int pointerIndex = event.findPointerIndex(activePointerId);
+                    float latestX = event.getX(pointerIndex);
+                    float latestY = event.getY(pointerIndex);
 
-                float deltaX = latestX - downX;
-                float deltaY = latestY - downY;
+                    float deltaX = latestX - downX;
+                    float deltaY = latestY - downY;
 
-                onDrag(deltaX, deltaY);
-                return true;
+                    onDrag(deltaX, deltaY);
+                    return true;
+                } else if (detectingDrag && dragExceedsSlop(event)) {
+                    onDragStart();
+                    return true;
+                }
+                break;
             }
             case MotionEvent.ACTION_POINTER_UP: {
                 final int pointerIndex = event.getActionIndex();
@@ -175,11 +183,25 @@ public class Joystick extends FrameLayout {
             case MotionEvent.ACTION_UP: {
                 onTouchEnded();
 
-                if (dragInProgress) onDragStop();
+                if (dragInProgress) {
+                    onDragStop();
+                } else {
+                    onStopDetectingDrag();
+                }
                 return true;
             }
         }
+
         return false;
+    }
+
+    private boolean dragExceedsSlop(MotionEvent event) {
+        final int pointerIndex = event.findPointerIndex(activePointerId);
+        final float x = event.getX(pointerIndex);
+        final float y = event.getY(pointerIndex);
+        final float dx = Math.abs(x - downX);
+        final float dy = Math.abs(y - downY);
+        return dx * dx + dy * dy > touchSlop * touchSlop;
     }
 
     private void onTouchEnded() {
