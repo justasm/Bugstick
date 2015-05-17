@@ -140,14 +140,6 @@ public class Joystick extends FrameLayout {
         this.radius = radius;
     }
 
-    public boolean isForceSquare() {
-        return forceSquare;
-    }
-
-    public void setForceSquare(boolean forceSquare) {
-        this.forceSquare = forceSquare;
-    }
-
     public boolean isStartOnFirstTouch() {
         return startOnFirstTouch;
     }
