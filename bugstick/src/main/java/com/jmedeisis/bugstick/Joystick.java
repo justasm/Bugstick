@@ -19,8 +19,7 @@ import android.widget.FrameLayout;
 /**
  * A simple and flexible joystick.
  * Extends FrameLayout and should host one direct child to act as the draggable stick.
- * <p/>
- * Created by Justas on 22/02/2015.
+ * Use {@link #setJoystickListener(JoystickListener)} to observe user inputs.
  */
 public class Joystick extends FrameLayout {
     private static final String LOG_TAG = Joystick.class.getSimpleName();
@@ -120,6 +119,30 @@ public class Joystick extends FrameLayout {
             Log.w(LOG_TAG, LOG_TAG + " has no draggable stick, and is therefore not functional. " +
                     "Consider adding a child view to act as the stick.");
         }
+    }
+
+    public float getRadius() {
+        return radius;
+    }
+
+    public void setRadius(float radius) {
+        this.radius = radius;
+    }
+
+    public boolean isForceSquare() {
+        return forceSquare;
+    }
+
+    public void setForceSquare(boolean forceSquare) {
+        this.forceSquare = forceSquare;
+    }
+
+    public boolean isStartOnFirstTouch() {
+        return startOnFirstTouch;
+    }
+
+    public void setStartOnFirstTouch(boolean startOnFirstTouch) {
+        this.startOnFirstTouch = startOnFirstTouch;
     }
 
     /*
