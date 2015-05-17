@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Bugstick</string>
+
+    <string name="angle_value">Angle: %1$.2f</string>
+    <string name="offset_value">%1$.2f :Offset</string>
+    <string name="angle_value_none">Angle: none</string>
+    <string name="offset_value_none">none :Offset</string>
 </resources>
