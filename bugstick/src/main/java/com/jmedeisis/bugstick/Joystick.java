@@ -40,6 +40,8 @@ public class Joystick extends FrameLayout {
     private static final int INVALID_POINTER_ID = -1;
     private int activePointerId = INVALID_POINTER_ID;
 
+    private boolean locked;
+
     private boolean startOnFirstTouch = true;
     private boolean forceSquare = true;
     private boolean hasFixedRadius = false;
@@ -119,6 +121,15 @@ public class Joystick extends FrameLayout {
             Log.w(LOG_TAG, LOG_TAG + " has no draggable stick, and is therefore not functional. " +
                     "Consider adding a child view to act as the stick.");
         }
+    }
+
+    /**
+     * Locks the stick position when next the user releases it.
+     * Note that {@link JoystickListener#onUp()} will not be called upon release.
+     * Resets to unlocked state after subsequent touch.
+     */
+    public void lock() {
+        locked = true;
     }
 
     public float getRadius() {
@@ -266,7 +277,9 @@ public class Joystick extends FrameLayout {
 
     private void onStopDetectingDrag() {
         detectingDrag = false;
-        if (null != listener) listener.onUp();
+        if (!locked && null != listener) listener.onUp();
+
+        locked = false;
     }
 
     private void onDragStart() {
@@ -278,13 +291,16 @@ public class Joystick extends FrameLayout {
 
     private void onDragStop() {
         dragInProgress = false;
-        onStopDetectingDrag();
 
-        draggedChild.animate()
-                .translationX(0).translationY(0)
-                .setDuration(STICK_SETTLE_DURATION_MS)
-                .setInterpolator(STICK_SETTLE_INTERPOLATOR)
-                .start();
+        if (!locked) {
+            draggedChild.animate()
+                    .translationX(0).translationY(0)
+                    .setDuration(STICK_SETTLE_DURATION_MS)
+                    .setInterpolator(STICK_SETTLE_INTERPOLATOR)
+                    .start();
+        }
+
+        onStopDetectingDrag();
         draggedChild = null;
     }
 
