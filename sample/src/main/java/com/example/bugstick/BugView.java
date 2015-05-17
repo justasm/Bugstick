@@ -72,7 +72,7 @@ public class BugView extends View implements TimeAnimator.TimeListener {
     }
 
     /**
-     * Start the bouncing as soon as we’re on screen.
+     * Start applying velocity as soon as view is on-screen.
      */
     @Override
     public void onAttachedToWindow() {
@@ -89,9 +89,6 @@ public class BugView extends View implements TimeAnimator.TimeListener {
         super.onDetachedFromWindow();
     }
 
-    /**
-     * Reposition all children when the container size changes.
-     */
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
@@ -103,6 +100,9 @@ public class BugView extends View implements TimeAnimator.TimeListener {
         path.moveTo(position.x, position.y);
     }
 
+    /**
+     * Set bug velocity in dips.
+     */
     public void setVelocity(float vxDps, float vyDps) {
         velocity.set(vxDps * density, vyDps * density);
     }
@@ -121,7 +121,9 @@ public class BugView extends View implements TimeAnimator.TimeListener {
         invalidate();
     }
 
-    /** Bound position and reflect velocity. */
+    /**
+     * Bound position and reflect velocity.
+     */
     private void reflect() {
         boolean flipX = false, flipY = false;
         if (position.x > width) {
@@ -142,7 +144,9 @@ public class BugView extends View implements TimeAnimator.TimeListener {
         if (flipY) velocity.y *= -1;
     }
 
-    /** Bound position. */
+    /**
+     * Bound position.
+     */
     private void bound() {
         if (position.x > width) {
             position.x = width;
@@ -165,7 +169,7 @@ public class BugView extends View implements TimeAnimator.TimeListener {
         pathMeasure.setPath(path, false);
         float length = pathMeasure.getLength();
 
-        if(length > BUG_TRAIL_DP * density){
+        if (length > BUG_TRAIL_DP * density) {
             // Note - this is likely a poor way to accomplish the result. Just for demo purposes.
             @SuppressLint("DrawAllocation")
             PathEffect effect = new DashPathEffect(new float[]{length, length}, -length + BUG_TRAIL_DP * density);
