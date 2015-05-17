@@ -271,7 +271,6 @@ public class Joystick extends FrameLayout {
 
     private void onDragStart() {
         dragInProgress = true;
-        requestDisallowInterceptTouchEvent(true);
         draggedChild = getChildAt(0);
         draggedChild.animate().cancel();
         onDrag(0, 0);
