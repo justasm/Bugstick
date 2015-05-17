@@ -46,6 +46,14 @@ public class Joystick extends FrameLayout {
     private boolean forceSquare = true;
     private boolean hasFixedRadius = false;
 
+    public enum MotionConstraint {
+        NONE,
+        HORIZONTAL,
+        VERTICAL
+    }
+
+    private MotionConstraint motionConstraint = MotionConstraint.NONE;
+
     private JoystickListener listener;
 
     public Joystick(Context context) {
@@ -82,6 +90,8 @@ public class Joystick extends FrameLayout {
             if (hasFixedRadius) {
                 radius = a.getDimensionPixelOffset(R.styleable.Joystick_radius, (int) radius);
             }
+            motionConstraint = MotionConstraint.values()[a.getInt(R.styleable.Joystick_motion_constraint,
+                    motionConstraint.ordinal())];
             a.recycle();
         }
     }
@@ -110,7 +120,17 @@ public class Joystick extends FrameLayout {
                 stickRadius = (float) Math.max(stick.getWidth(), stick.getHeight()) / 2;
             }
 
-            radius = (float) Math.min(right - left, bottom - top) / 2 - stickRadius;
+            switch (motionConstraint) {
+                case NONE:
+                    radius = (float) Math.min(right - left, bottom - top) / 2 - stickRadius;
+                    break;
+                case HORIZONTAL:
+                    radius = (float) (right - left) / 2 - stickRadius;
+                    break;
+                case VERTICAL:
+                    radius = (float) (bottom - top) / 2 - stickRadius;
+                    break;
+            }
         }
     }
 
@@ -130,6 +150,14 @@ public class Joystick extends FrameLayout {
      */
     public void lock() {
         locked = true;
+    }
+
+    public MotionConstraint getMotionConstraint() {
+        return motionConstraint;
+    }
+
+    public void setMotionConstraint(MotionConstraint motionConstraint) {
+        this.motionConstraint = motionConstraint;
     }
 
     public float getRadius() {
@@ -302,6 +330,15 @@ public class Joystick extends FrameLayout {
     private void onDrag(float dx, float dy) {
         float x = downX + dx - centerX;
         float y = downY + dy - centerY;
+
+        switch (motionConstraint) {
+            case HORIZONTAL:
+                y = 0;
+                break;
+            case VERTICAL:
+                x = 0;
+                break;
+        }
 
         float offset = (float) Math.sqrt(x * x + y * y);
         if (x * x + y * y > radius * radius) {

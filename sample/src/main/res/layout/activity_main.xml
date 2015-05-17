@@ -13,7 +13,8 @@
         android:layout_alignParentBottom="true"
         android:background="@drawable/bg_base"
         app:start_on_first_touch="true"
-        app:force_square="true" >
+        app:force_square="true"
+        app:motion_constraint="None">
 
         <Button
             android:layout_width="@dimen/stick_size"
