@@ -150,6 +150,8 @@ public class Joystick extends FrameLayout {
      */
     @Override
     public boolean onInterceptTouchEvent(MotionEvent event) {
+        if(!isEnabled()) return false;
+
         switch (event.getActionMasked()) {
             case MotionEvent.ACTION_DOWN: {
                 if (detectingDrag || !hasStick()) return false;
@@ -190,6 +192,8 @@ public class Joystick extends FrameLayout {
 
     @Override
     public boolean onTouchEvent(@NonNull MotionEvent event) {
+        if(!isEnabled()) return false;
+
         switch (event.getActionMasked()) {
             case MotionEvent.ACTION_DOWN: {
                 if (!detectingDrag) return false;
