@@ -77,7 +77,7 @@ public class Joystick extends FrameLayout {
             startOnFirstTouch = a.getBoolean(R.styleable.Joystick_start_on_first_touch, startOnFirstTouch);
             forceSquare = a.getBoolean(R.styleable.Joystick_force_square, forceSquare);
             hasFixedRadius = a.hasValue(R.styleable.Joystick_radius);
-            if(hasFixedRadius){
+            if (hasFixedRadius) {
                 radius = a.getDimensionPixelOffset(R.styleable.Joystick_radius, (int) radius);
             }
             a.recycle();
@@ -98,12 +98,12 @@ public class Joystick extends FrameLayout {
     }
 
     @Override
-    public void onLayout(boolean changed, int left, int top, int right, int bottom){
+    public void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
 
-        if(changed && !hasFixedRadius) {
+        if (changed && !hasFixedRadius) {
             float stickRadius = 0;
-            if(hasStick()){
+            if (hasStick()) {
                 final View stick = getChildAt(0);
                 stickRadius = (float) Math.max(stick.getWidth(), stick.getHeight()) / 2;
             }
@@ -150,7 +150,7 @@ public class Joystick extends FrameLayout {
      */
     @Override
     public boolean onInterceptTouchEvent(MotionEvent event) {
-        if(!isEnabled()) return false;
+        if (!isEnabled()) return false;
 
         switch (event.getActionMasked()) {
             case MotionEvent.ACTION_DOWN: {
@@ -192,7 +192,7 @@ public class Joystick extends FrameLayout {
 
     @Override
     public boolean onTouchEvent(@NonNull MotionEvent event) {
-        if(!isEnabled()) return false;
+        if (!isEnabled()) return false;
 
         switch (event.getActionMasked()) {
             case MotionEvent.ACTION_DOWN: {
@@ -317,7 +317,7 @@ public class Joystick extends FrameLayout {
      */
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        if(!forceSquare){
+        if (!forceSquare) {
             super.onMeasure(widthMeasureSpec, heightMeasureSpec);
             return;
         }
