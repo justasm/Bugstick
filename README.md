@@ -67,6 +67,41 @@ joystick.setJoystickListener(new JoystickListener() {
 
 Please refer to the included [sample project](sample/) for a thorough example.
 
+Configuration
+-------------
+You can configure the following attributes for the `Joystick` class:
+
+- `start_on_first_touch` - If true (default), the stick activates immediately on the initial touch.
+If false, the user must begin to drag their finger across the joystick for the stick to activate.
+
+- `force_square` - If true (default), the joystick always measures itself to force a square layout.
+
+- `radius` - If specified, this is the maximum physical offset from the center that the stick is
+allowed to move. If not specified (default), the radius is determined based on the dimensions of
+the base and the stick.
+
+- `motion_constraint` - One of `None` (default), `Horizontal`, or `Vertical`. Specifies whether the
+stick motion should be constrained to a particular direction. If `None`, the stick is allowed to
+move freely around the center of the base.
+
+Example configuration:
+
+```xml
+<com.jmedeisis.bugstick.Joystick
+    android:id="@+id/joystick"
+    android:layout_width="@dimen/base_width"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_base"
+    app:start_on_first_touch="false"
+    app:force_square="false"
+    app:radius="@dimen/stick_offset_max_radius"
+    app:motion_constraint="Vertical">
+
+    <!-- Any View here. -->
+
+</com.jmedeisis.bugstick.Joystick>
+```
+
 License
 -------
 Bugstick is licensed under the terms of the [MIT License](LICENSE.txt).
