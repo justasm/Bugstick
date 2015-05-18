@@ -4,6 +4,13 @@ Flexible joystick widget for Android.
 
 Why Bugstick?
 -------------
+Most [other][zerokol-joystickview] [joystick][anarchy-joystickview] [widgets][sphero-joystickview]
+are a hassle to include in modern Gradle-based Android projects, support only limited visual
+customization, and suffer from overly prescriptive output.
+
+So how does Bugstick solve these issues?
+
+- *Painless Dependency* - try it out quickly with a simple Gradle dependency.
 
 - *Configurable Look* - the joystick base and stick are a completely decoupled, standard
 ViewGroup - View pair. Use an `ImageView`, `Button`, `LinearLayout`, or any other View as
@@ -105,3 +112,7 @@ Example configuration:
 License
 -------
 Bugstick is licensed under the terms of the [MIT License](LICENSE.txt).
+
+[zerokol-joystickview]: https://github.com/zerokol/JoystickView
+[anarchy-joystickview]: https://code.google.com/p/mobile-anarchy-widgets/wiki/JoystickView
+[sphero-joystickview]: https://github.com/orbotix/Sphero-Android-SDK/tree/master/samples/UISample
