@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'bintray-release'
 
 android {
     compileSdkVersion 22
@@ -21,4 +22,24 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:support-annotations:22.1.1'
+}
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.novoda:bintray-release:0.2.10'
+    }
+}
+
+// see https://github.com/novoda/bintray-release/wiki/Configuration-of-the-publish-closure
+publish {
+    userOrg = 'justasm'
+    groupId = 'com.jmedeisis'
+    artifactId = 'bugstick'
+    version = "0.2.0"
+    licences = ['MIT']
+    description = "Joystick widget for Android."
+    website = 'https://github.com/justasm/Bugstick'
 }
