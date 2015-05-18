@@ -2,6 +2,8 @@ Bugstick
 ========
 Flexible joystick widget for Android.
 
+![Sample animated.](graphics/sample_animated.gif)
+
 Why Bugstick?
 -------------
 Most [other][zerokol-joystickview] [joystick][anarchy-joystickview] [widgets][sphero-joystickview]
@@ -18,7 +20,7 @@ the stick, and use standard `Drawable`s to theme Bugstick so it looks at home in
 
 - *Unopinionated Output* - the widget reports proportional offset of the stick from its center as
 well as the current angle via a standard listener interface. Choose to interpret these raw outputs
-in the way that suits your use-case.
+in the way that suits your use case.
 
 Usage
 -----
@@ -115,4 +117,4 @@ Bugstick is licensed under the terms of the [MIT License](LICENSE.txt).
 
 [zerokol-joystickview]: https://github.com/zerokol/JoystickView
 [anarchy-joystickview]: https://code.google.com/p/mobile-anarchy-widgets/wiki/JoystickView
-[sphero-joystickview]: https://github.com/orbotix/Sphero-Android-SDK/tree/master/samples/UISample
+[sphero-joystickview]: https://github.com/orbotix/Sphero-Android-SDK/tree/master/samples/UISample#joystick-view
