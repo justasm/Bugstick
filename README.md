@@ -6,7 +6,7 @@ Flexible joystick widget for Android.
 
 Why Bugstick?
 -------------
-Most [other][zerokol-joystickview] [joystick][anarchy-joystickview] [widgets][sphero-joystickview]
+[Other][zerokol-joystickview] [joystick][anarchy-joystickview] [widgets][sphero-joystickview]
 are a hassle to include in modern Gradle-based Android projects, support only limited visual
 customization, and suffer from overly prescriptive output.
 
