@@ -111,6 +111,13 @@ Example configuration:
 </com.jmedeisis.bugstick.Joystick>
 ```
 
+Development
+-----------
+Pull requests are welcome and encouraged for bugfixes and features such as:
+
+- accessibility support
+- more powerful motion constraints, e.g. constrain to arbitrary path
+
 License
 -------
 Bugstick is licensed under the terms of the [MIT License](LICENSE.txt).
