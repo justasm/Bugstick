@@ -148,6 +148,7 @@ public class Joystick extends FrameLayout {
      * Note that {@link JoystickListener#onUp()} will not be called upon release.
      * Resets to unlocked state after subsequent touch.
      */
+    @SuppressWarnings("unused")
     public void lock() {
         locked = true;
     }
@@ -156,6 +157,7 @@ public class Joystick extends FrameLayout {
      * @return Distance in pixels a touch can wander before the joystick thinks the user is
      * manipulating the stick.
      */
+    @SuppressWarnings("unused")
     public int getTouchSlop() {
         return touchSlop;
     }
@@ -164,18 +166,22 @@ public class Joystick extends FrameLayout {
      * @param touchSlop Distance in pixels a touch can wander before the joystick thinks the user is
      *                  manipulating the stick.
      */
+    @SuppressWarnings("unused")
     public void setTouchSlop(int touchSlop) {
         this.touchSlop = touchSlop;
     }
 
+    @SuppressWarnings("unused")
     public MotionConstraint getMotionConstraint() {
         return motionConstraint;
     }
 
+    @SuppressWarnings("unused")
     public void setMotionConstraint(MotionConstraint motionConstraint) {
         this.motionConstraint = motionConstraint;
     }
 
+    @SuppressWarnings("unused")
     public float getRadius() {
         return radius;
     }
@@ -183,10 +189,12 @@ public class Joystick extends FrameLayout {
     /**
      * @param radius The maximum offset in pixels from the center that the stick is allowed to move.
      */
+    @SuppressWarnings("unused")
     public void setRadius(float radius) {
         this.radius = radius;
     }
 
+    @SuppressWarnings("unused")
     public boolean isStartOnFirstTouch() {
         return startOnFirstTouch;
     }
@@ -196,6 +204,7 @@ public class Joystick extends FrameLayout {
      *                          Else, the user must begin to drag their finger across the joystick
      *                          for the stick to activate.
      */
+    @SuppressWarnings("unused")
     public void setStartOnFirstTouch(boolean startOnFirstTouch) {
         this.startOnFirstTouch = startOnFirstTouch;
     }
