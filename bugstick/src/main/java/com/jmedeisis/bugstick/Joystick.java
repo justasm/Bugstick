@@ -114,23 +114,27 @@ public class Joystick extends FrameLayout {
         super.onLayout(changed, left, top, right, bottom);
 
         if (changed && !hasFixedRadius) {
-            float stickRadius = 0;
-            if (hasStick()) {
-                final View stick = getChildAt(0);
-                stickRadius = (float) Math.max(stick.getWidth(), stick.getHeight()) / 2;
-            }
+            recalculateRadius(right - left, bottom - top);
+        }
+    }
 
-            switch (motionConstraint) {
-                case NONE:
-                    radius = (float) Math.min(right - left, bottom - top) / 2 - stickRadius;
-                    break;
-                case HORIZONTAL:
-                    radius = (float) (right - left) / 2 - stickRadius;
-                    break;
-                case VERTICAL:
-                    radius = (float) (bottom - top) / 2 - stickRadius;
-                    break;
-            }
+    private void recalculateRadius(int width, int height) {
+        float stickRadius = 0;
+        if (hasStick()) {
+            final View stick = getChildAt(0);
+            stickRadius = (float) Math.max(stick.getWidth(), stick.getHeight()) / 2;
+        }
+
+        switch (motionConstraint) {
+            case NONE:
+                radius = (float) Math.min(width, height) / 2 - stickRadius;
+                break;
+            case HORIZONTAL:
+                radius = (float) width / 2 - stickRadius;
+                break;
+            case VERTICAL:
+                radius = (float) height / 2 - stickRadius;
+                break;
         }
     }
 
@@ -179,6 +183,8 @@ public class Joystick extends FrameLayout {
     @SuppressWarnings("unused")
     public void setMotionConstraint(MotionConstraint motionConstraint) {
         this.motionConstraint = motionConstraint;
+
+        if (!hasFixedRadius) recalculateRadius(getWidth(), getHeight());
     }
 
     @SuppressWarnings("unused")
