@@ -27,7 +27,7 @@ public class Joystick extends FrameLayout {
     private static final int STICK_SETTLE_DURATION_MS = 100;
     private static final Interpolator STICK_SETTLE_INTERPOLATOR = new DecelerateInterpolator();
 
-    private float touchSlop;
+    private int touchSlop;
 
     private float centerX, centerY;
     private float radius;
@@ -152,6 +152,22 @@ public class Joystick extends FrameLayout {
         locked = true;
     }
 
+    /**
+     * @return Distance in pixels a touch can wander before the joystick thinks the user is
+     * manipulating the stick.
+     */
+    public int getTouchSlop() {
+        return touchSlop;
+    }
+
+    /**
+     * @param touchSlop Distance in pixels a touch can wander before the joystick thinks the user is
+     *                  manipulating the stick.
+     */
+    public void setTouchSlop(int touchSlop) {
+        this.touchSlop = touchSlop;
+    }
+
     public MotionConstraint getMotionConstraint() {
         return motionConstraint;
     }
@@ -164,6 +180,9 @@ public class Joystick extends FrameLayout {
         return radius;
     }
 
+    /**
+     * @param radius The maximum offset in pixels from the center that the stick is allowed to move.
+     */
     public void setRadius(float radius) {
         this.radius = radius;
     }
@@ -172,6 +191,11 @@ public class Joystick extends FrameLayout {
         return startOnFirstTouch;
     }
 
+    /**
+     * @param startOnFirstTouch If true, the stick activates immediately on the initial touch.
+     *                          Else, the user must begin to drag their finger across the joystick
+     *                          for the stick to activate.
+     */
     public void setStartOnFirstTouch(boolean startOnFirstTouch) {
         this.startOnFirstTouch = startOnFirstTouch;
     }
