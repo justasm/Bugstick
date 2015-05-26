@@ -312,7 +312,16 @@ public class Joystick extends FrameLayout {
         final float y = event.getY(pointerIndex);
         final float dx = Math.abs(x - downX);
         final float dy = Math.abs(y - downY);
-        return dx * dx + dy * dy > touchSlop * touchSlop;
+
+        switch (motionConstraint) {
+            case NONE:
+                return dx * dx + dy * dy > touchSlop * touchSlop;
+            case HORIZONTAL:
+                return dx > touchSlop;
+            case VERTICAL:
+                return dy > touchSlop;
+        }
+        return false;
     }
 
     private void onTouchEnded() {
