@@ -119,21 +119,23 @@ public class Joystick extends FrameLayout {
     }
 
     private void recalculateRadius(int width, int height) {
-        float stickRadius = 0;
+        float stickHalfWidth = 0;
+        float stickHalfHeight = 0;
         if (hasStick()) {
             final View stick = getChildAt(0);
-            stickRadius = (float) Math.max(stick.getWidth(), stick.getHeight()) / 2;
+            stickHalfWidth = (float) stick.getWidth() / 2;
+            stickHalfHeight = (float) stick.getHeight() / 2;
         }
 
         switch (motionConstraint) {
             case NONE:
-                radius = (float) Math.min(width, height) / 2 - stickRadius;
+                radius = (float) Math.min(width, height) / 2 - Math.max(stickHalfWidth, stickHalfHeight);
                 break;
             case HORIZONTAL:
-                radius = (float) width / 2 - stickRadius;
+                radius = (float) width / 2 - stickHalfWidth;
                 break;
             case VERTICAL:
-                radius = (float) height / 2 - stickRadius;
+                radius = (float) height / 2 - stickHalfHeight;
                 break;
         }
     }
