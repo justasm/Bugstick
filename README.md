@@ -27,7 +27,7 @@ Usage
 Add it to your project using Gradle:
 
 ```groovy
-compile 'com.jmedeisis:bugstick:0.2.1'
+compile 'com.jmedeisis:bugstick:0.2.2'
 ```
 
 Example XML layout file:

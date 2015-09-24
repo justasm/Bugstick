@@ -8,8 +8,8 @@ android {
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 23
-        versionCode 1
-        versionName "0.2.1"
+        versionCode 2
+        versionName "0.2.2"
     }
     buildTypes {
         release {
@@ -38,7 +38,7 @@ publish {
     userOrg = 'justasm'
     groupId = 'com.jmedeisis'
     artifactId = 'bugstick'
-    version = "0.2.1"
+    version = "0.2.2"
     licences = ['MIT']
     desc = "Joystick widget for Android."
     website = 'https://github.com/justasm/Bugstick'
