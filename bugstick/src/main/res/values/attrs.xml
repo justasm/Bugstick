@@ -10,6 +10,10 @@
             <enum name="Horizontal" value="1" />
             <enum name="Vertical" value="2" />
         </attr>
+        <attr name="base_shape" format="enum">
+            <enum name="oval" value="0" />
+            <enum name="rect" value="1" />
+        </attr>
     </declare-styleable>
 
 </resources>
