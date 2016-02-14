@@ -52,7 +52,13 @@ public class Joystick extends FrameLayout {
         VERTICAL
     }
 
+    public enum BaseShape {
+        OVAL,
+        RECT
+    }
+
     private MotionConstraint motionConstraint = MotionConstraint.NONE;
+    private BaseShape baseShape = BaseShape.OVAL;
 
     private JoystickListener listener;
 
@@ -92,6 +98,10 @@ public class Joystick extends FrameLayout {
             }
             motionConstraint = MotionConstraint.values()[a.getInt(R.styleable.Joystick_motion_constraint,
                     motionConstraint.ordinal())];
+
+            baseShape = BaseShape.values()[a.getInt(R.styleable.Joystick_base_shape,
+                    baseShape.ordinal())];
+
             a.recycle();
         }
     }
@@ -377,7 +387,75 @@ public class Joystick extends FrameLayout {
     /**
      * Where most of the magic happens. What, basic trigonometry isn't magic?!
      */
+//    private void onDrag(float dx, float dy) {
+//        float x = downX + dx - centerX;
+//        float y = downY + dy - centerY;
+//
+//        switch (motionConstraint) {
+//            case HORIZONTAL:
+//                y = 0;
+//                break;
+//            case VERTICAL:
+//                x = 0;
+//                break;
+//        }
+//
+//        float offset = (float) Math.sqrt(x * x + y * y);
+//        if (x * x + y * y > radius * radius) {
+//            x = radius * x / offset;
+//            y = radius * y / offset;
+//            offset = radius;
+//        }
+//
+//        final double radians = Math.atan2(-y, x);
+//        final float degrees = (float) (180 * radians / Math.PI);
+//
+//        if (null != listener) listener.onDrag(degrees, 0 == radius ? 0 : offset / radius);
+//
+//        draggedChild.setTranslationX(x);
+//        draggedChild.setTranslationY(y);
+//    }
+
     private void onDrag(float dx, float dy) {
+        if (baseShape == BaseShape.RECT) {
+            onDragRect(dx, dy);
+        } else {
+            onDragOval(dx, dy);
+        }
+    }
+
+    private void onDragRect(float dx, float dy) {
+        float x = downX + dx - centerX;
+        float y = downY + dy - centerY;
+
+        switch (motionConstraint) {
+            case HORIZONTAL:
+                y = 0;
+                break;
+            case VERTICAL:
+                x = 0;
+                break;
+        }
+
+        if( x > radius ) x = radius;
+        if( x < -radius ) x = -radius;
+
+        if( y > radius ) y = radius;
+        if( y < -radius ) y = -radius;
+
+        float xOffset = x / radius;
+        float yOffset = y / radius;
+
+        if (null != listener) listener.onDrag(xOffset, -yOffset);
+
+        draggedChild.setTranslationX(x);
+        draggedChild.setTranslationY(y);
+    }
+
+    /**
+     * Where most of the magic happens. What, basic trigonometry isn't magic?!
+     */
+    private void onDragOval(float dx, float dy) {
         float x = downX + dx - centerX;
         float y = downY + dy - centerY;
 

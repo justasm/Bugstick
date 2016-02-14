@@ -4,5 +4,8 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
 
     <dimen name="default_margin">16dp</dimen>
+    <dimen name="rect_joystick_margin">32dp</dimen>
     <dimen name="stick_size">144dp</dimen>
+
+    <dimen name="half_stick_size">72dp</dimen>
 </resources>

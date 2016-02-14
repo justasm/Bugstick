@@ -1,0 +1,48 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <com.jmedeisis.bugstick.Joystick
+        android:id="@+id/joystick"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/rect_joystick_margin"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/bg_base_rect"
+        app:start_on_first_touch="true"
+        app:force_square="true"
+        app:base_shape="rect"
+        app:motion_constraint="None">
+
+        <Button
+            android:layout_width="@dimen/stick_size"
+            android:layout_height="@dimen/stick_size"
+            android:background="@drawable/bg_stick" />
+
+    </com.jmedeisis.bugstick.Joystick>
+
+    <com.example.bugstick.BugView
+        android:id="@+id/bugview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/joystick" />
+
+    <TextView style="@style/TextAppearance.AppCompat.Caption"
+        android:id="@+id/tv_angle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/default_margin"
+        android:layout_below="@id/bugview" />
+
+    <TextView style="@style/TextAppearance.AppCompat.Caption"
+        android:id="@+id/tv_offset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/default_margin"
+        android:layout_below="@id/bugview"
+        android:layout_alignParentRight="true" />
+
+</RelativeLayout>
